@@ -23,7 +23,7 @@ int main(int charc,char *argv[]){
             }
         }
     }
-    std::cout << "successs bingus";
+    std::cout << "successs bingus 2";
     SDL_DestroyWindow(window);
     SDL_Quit();
 
