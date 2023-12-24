@@ -16,8 +16,8 @@ void bird::draw(SDL_Renderer* rend){
 
 void bird::updatePosition(float dt){
     birdPosition.y += dt*birdVelocity.y;
-    if(birdPosition.y > float(Global.HEIGHT)*0.75){
-        birdPosition.y = Global.HEIGHT*0.75;
+    if(birdPosition.y > float(Global.HEIGHT)*0.75 - SIZE){
+        birdPosition.y = Global.HEIGHT*0.75 - SIZE;
         birdVelocity.y = 0;
     }
     birdRect.y = birdPosition.y; //coordinates of bird rect are used for position when drawing

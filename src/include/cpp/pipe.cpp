@@ -2,10 +2,12 @@
 #include <SDL2/SDL.h>
 #include <cstdlib>
 
-pipe::pipe (SDL_FPoint birdPos){
+pipe::pipe (SDL_FPoint birdPos, bool location){
+    topOrBottom = location; // set value first otherwise rect starts at y = 0 for bottom 
     birdPosition = birdPos;
     generateSize();
     generatePosition();
+    
 }
 
 void pipe::draw (SDL_Renderer* rend){
@@ -15,23 +17,29 @@ void pipe::draw (SDL_Renderer* rend){
 }
 
 void pipe::generateSize(){
-    width = 20 + rand() % 40;
-    height = 40 + rand() % 40;
+    width = 50 + rand() % 100;
+    height = 60 + rand() % 150;
     pipeRect.w = width;
     pipeRect.h = height;
-    pipePosition.y = float(Global.HEIGHT)*0.75 - height;
+    
 
 }
 
 void pipe::generatePosition(){
     pipePosition.x = int(birdPosition.x) + 100 + rand() % 400;
     pipeRect.x = pipePosition.x; // pipeRect x position is what is drawn
+    if (!topOrBottom){
+        pipePosition.y = float(Global.HEIGHT)*0.75 - height;
+        pipeRect.y = pipePosition.y;
+    }
 }
 
 void pipe::updatePosition(float dt){
     pipePosition.x -= dt * float(GAMEVELOCITY);
-    if (pipePosition.x <= -width){
-        generatePosition();
+    if (pipePosition.x <= -width - 10){
+        generateSize();
+        generatePosition(); // must happen afer genSize so right size is used
+        
     }
     pipeRect.x = pipePosition.x; // needed since generatePosition is only called when off screen
 

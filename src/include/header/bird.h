@@ -2,7 +2,7 @@
 #define BIRD_H
 #include "header/globals.h"
 #include <SDL2/SDL.h>
-#define GRAVITY 400
+#define GRAVITY 600
 #define SIZE 20
 
 class bird{

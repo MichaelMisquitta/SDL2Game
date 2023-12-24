@@ -7,11 +7,13 @@
 class pipe{
 
     public:
+   
     //constructors
-    pipe(SDL_FPoint);
+    pipe(SDL_FPoint,bool);
     //variables
     int width = 0;
     int height = 0;
+    bool topOrBottom = true; // true for top, false for bottom
     global Global;
     SDL_FPoint pipePosition = {200,0};  //generation of pipes needs to happen ahead of bird position
     SDL_FPoint birdPosition = {0,0};

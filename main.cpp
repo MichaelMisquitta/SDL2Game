@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <header/bird.h>
 #include <header/pipe.h>
+#include<header/globals.h>
 //#include "cpp/bird.cpp"
 
 
@@ -28,7 +29,8 @@
     SDL_Renderer *renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
 
     bird flappybird;
-    pipe pipeBottom(flappybird.birdPosition);
+    pipe pipeBottom(flappybird.birdPosition,false);
+    pipe pipeTop(flappybird.birdPosition,true);
 
     if (window == NULL){
         std::cout << "window error"<<SDL_GetError();
@@ -58,13 +60,19 @@
         
         SDL_SetRenderDrawColor(renderer,0,0,0,255);
         SDL_RenderClear(renderer);
-        
+        //draw ground - make class and make  ground looks like its moving - TODO
+        SDL_Rect groundRect = {0, int(0.75 * Global.HEIGHT), int(Global.WIDTH), int(0.25 * Global.HEIGHT)};
+        SDL_SetRenderDrawColor(renderer,159,90,253,255);
+        SDL_RenderFillRect(renderer,&groundRect);
+
         flappybird.updateVelocity(false,dt);
         flappybird.updatePosition(dt);
         flappybird.draw(renderer);
 
         pipeBottom.updatePosition(dt);
         pipeBottom.draw(renderer);
+        pipeTop.updatePosition(dt);
+        pipeTop.draw(renderer);
         
 
         end = SDL_GetPerformanceCounter();
