@@ -1,3 +1,8 @@
 * If code isnt working after change, check to see everything that you wanted to implement is actually there, no missing lines of code, etc.
 
 *make a few changes and test code.
+
+*SDL2 Specific
+
+-renderpresent uses gpu while updatewindowsurface is for cpu and is not as fast
+--using a texture and rendering it with rendercopy is more efficient
