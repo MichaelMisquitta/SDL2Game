@@ -3,14 +3,25 @@
 #include <header/bird.h>
 #include <SDL2/SDL.h>
 
-bird::bird(){
-
-
+bird::bird(SDL_Renderer* rend){
+    renderer = rend;
+    bmpTex = SDL_CreateTextureFromSurface(renderer, spriteSheetImage);
+     
+}
+bird::~bird(){
+    SDL_FreeSurface(spriteSheetImage);
+    //free(renderer); taken care off by destroyRenderer in main
 }
 
 void bird::draw(SDL_Renderer* rend){
-    SDL_SetRenderDrawColor(rend,0,100,0,255);
-    SDL_RenderFillRect(rend,&birdRect);
+
+    spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
+    // without birdRect, it renders as large as window allows. birdRect crops out what it can fit
+    
+    SDL_RenderCopyEx(renderer, bmpTex,NULL, &birdRect,0,NULL,SDL_FLIP_NONE );
+    
+    //SDL_SetRenderDrawColor(rend,0,100,0,255);
+    //SDL_RenderFillRect(rend,&birdRect);
     
 }
 

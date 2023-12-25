@@ -2,23 +2,43 @@
 #include <SDL2/SDL.h>
 #include <cstdlib>
 
-pipe::pipe (SDL_FPoint birdPos, bool location){
+pipe::pipe (SDL_FPoint birdPos, bool location, SDL_Renderer* rend){
     topOrBottom = location; // set value first otherwise rect starts at y = 0 for bottom 
     birdPosition = birdPos;
     generateSize();
     generatePosition();
-    
+    renderer = rend;
+    bmpTex = SDL_CreateTextureFromSurface(renderer, spriteSheetImage);
+}
+pipe::~pipe(){
+
 }
 
 void pipe::draw (SDL_Renderer* rend){
-    SDL_SetRenderDrawColor(rend,100,0,0,255);
-    SDL_RenderFillRect(rend,&pipeRect);
+
+    spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
+    auto flip = [this]{
+        if(this->topOrBottom){
+            return SDL_FLIP_VERTICAL;
+        }else{
+            return SDL_FLIP_NONE;
+        }
+
+
+    };
+    // without birdRect, it renders as large as window allows. birdRect crops out what it can fit
+    SDL_RenderCopyEx(renderer, bmpTex,NULL, &pipeRect,0,NULL, flip());
+
+    //SDL_SetRenderDrawColor(rend,100,0,0,255);
+    //SDL_RenderFillRect(rend,&pipeRect);
 
 }
 
 void pipe::generateSize(){
     width = 50 + rand() % 100;
     height = 60 + rand() % 150;
+
+    
     pipeRect.w = width;
     pipeRect.h = height;
     

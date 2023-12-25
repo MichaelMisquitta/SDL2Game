@@ -1,0 +1,3 @@
+* If code isnt working after change, check to see everything that you wanted to implement is actually there, no missing lines of code, etc.
+
+*make a few changes and test code.

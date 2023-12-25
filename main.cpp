@@ -28,9 +28,9 @@
     SDL_Window *window = SDL_CreateWindow("test",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,Global.WIDTH,Global.HEIGHT,0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
 
-    bird flappybird;
-    pipe pipeBottom(flappybird.birdPosition,false);
-    pipe pipeTop(flappybird.birdPosition,true);
+    bird flappybird {renderer};
+    pipe pipeBottom(flappybird.birdPosition,false, renderer);
+    pipe pipeTop(flappybird.birdPosition,true, renderer);
 
     if (window == NULL){
         std::cout << "window error"<<SDL_GetError();
