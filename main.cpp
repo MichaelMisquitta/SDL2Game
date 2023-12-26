@@ -5,6 +5,7 @@
 #include <header/collision.h>
 #include<header/globals.h>
 #include <list>
+#include <header/menu.h>
 //#include "cpp/bird.cpp"
 
 
@@ -33,6 +34,7 @@
     bird flappybird {renderer};
     pipe *pipeBottom = new pipe(flappybird.birdPosition,false, renderer);
     pipe *pipeTop = new pipe(flappybird.birdPosition,true, renderer);
+    menu gameMenu {renderer};
 
     std::list<pipe*> pipes {pipeBottom,pipeTop};
 
@@ -96,6 +98,7 @@
         //SDL_Delay(floor(1000/float(fps)));
         SDL_Delay(delay);
 
+        //gameMenu.drawMenu();
         SDL_RenderPresent(renderer);
     }
     // add code to delete pipe pointers. Use smart pointers next, which are objects and

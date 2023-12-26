@@ -6,3 +6,4 @@
 
 -renderpresent uses gpu while updatewindowsurface is for cpu and is not as fast
 --using a texture and rendering it with rendercopy is more efficient
+- get devel files for libraries - need include, lib, and bin
