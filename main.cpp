@@ -2,7 +2,9 @@
 #include <SDL2/SDL.h>
 #include <header/bird.h>
 #include <header/pipe.h>
+#include <header/collision.h>
 #include<header/globals.h>
+#include <list>
 //#include "cpp/bird.cpp"
 
 
@@ -10,12 +12,12 @@
 
  int main(int charc,char *argv[]){
 
-    int b = 255;
-    float fpsTime = 0;
+    bool gameOn = true;
+    int collisions = 0;
     int fps = 60;
     float elapsedMS = 16;
     float dt = 0.016;
-    fpsTime = 1.0000/float(fps)*1000.0000;
+    float fpsTime = 1.0000/float(fps)*1000.0000;
     Uint64 start = 0;
     Uint64 end = 0;
     global Global;
@@ -27,10 +29,13 @@
     //SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window = SDL_CreateWindow("test",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,Global.WIDTH,Global.HEIGHT,0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-
+    collision collisionOb;
     bird flappybird {renderer};
-    pipe pipeBottom(flappybird.birdPosition,false, renderer);
-    pipe pipeTop(flappybird.birdPosition,true, renderer);
+    pipe *pipeBottom = new pipe(flappybird.birdPosition,false, renderer);
+    pipe *pipeTop = new pipe(flappybird.birdPosition,true, renderer);
+
+    std::list<pipe*> pipes {pipeBottom,pipeTop};
+
 
     if (window == NULL){
         std::cout << "window error"<<SDL_GetError();
@@ -39,7 +44,7 @@
     }
     SDL_Event Event;
 
-    while(true){
+    while(gameOn){
         start = SDL_GetPerformanceCounter();
 
         if(SDL_PollEvent(&Event)){
@@ -69,11 +74,15 @@
         flappybird.updatePosition(dt);
         flappybird.draw(renderer);
 
-        pipeBottom.updatePosition(dt);
-        pipeBottom.draw(renderer);
-        pipeTop.updatePosition(dt);
-        pipeTop.draw(renderer);
+        pipeBottom->updatePosition(dt);
+        pipeBottom->draw(renderer);
+        pipeTop->updatePosition(dt);
+        pipeTop->draw(renderer);
         
+        if(collisionOb.isColliding(flappybird,pipes)){
+            collisions ++;
+            //gameOn = false;
+        }
 
         end = SDL_GetPerformanceCounter();
         elapsedMS = (end-start) / (float)(SDL_GetPerformanceFrequency()) * 1000.0f;
@@ -83,12 +92,16 @@
         if(delay < 0){
             delay = 1/60.0f*1000.0f; // line is needed to stop delay from going negative when exiting window and causing program crash.
         }
-        //std::cout << flappybird.birdVelocity.y << "\n" ;
+        std::cout << collisions << "\n" ;
         //SDL_Delay(floor(1000/float(fps)));
         SDL_Delay(delay);
 
         SDL_RenderPresent(renderer);
     }
+    // add code to delete pipe pointers. Use smart pointers next, which are objects and
+    //when pointer obj goes out of scope, it deletes pointer automatically!
+    delete pipeTop;
+    delete pipeBottom;
     std::cout << "-successs bingus 2";
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
