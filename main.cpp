@@ -6,6 +6,7 @@
 #include<header/globals.h>
 #include <list>
 #include <header/menu.h>
+#include <SDL2_ttf/SDL_ttf.h>
 //#include "cpp/bird.cpp"
 
 
@@ -27,6 +28,7 @@
         printf("Error initializing SDL: %s\n", SDL_GetError());
         return 0;
     }
+    TTF_Init();
     //SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window = SDL_CreateWindow("test",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,Global.WIDTH,Global.HEIGHT,0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
@@ -57,6 +59,45 @@
             if(Event.type = SDL_KEYDOWN){
                 if(Event.key.keysym.sym == SDLK_SPACE ){
                     flappybird.updateVelocity(true,dt);
+                }
+                if(Event.key.keysym.sym == SDLK_ESCAPE ){
+                    bool check = true;
+                    SDL_SetRenderDrawColor(renderer,0,0,0,255);
+                    SDL_RenderClear(renderer);
+                    SDL_Event EventInner;
+                    std::cout << "esc called outer \n";
+                    
+                    while(check){
+                        
+                        gameMenu.drawMenu();
+                        if(SDL_PollEvent(&EventInner)){
+                            
+                            //std::cout << "polled \n";
+                            if(EventInner.type = SDL_KEYDOWN){
+                                if(EventInner.key.keysym.sym == SDLK_LALT ){
+                                    check = false;
+                                    gameOn = false;
+                                        
+                                }
+                                if(EventInner.key.keysym.sym == SDLK_LCTRL ){
+                                    std::cout << "test \n";
+                                    check = false;
+                                    
+                                    
+                                    
+                                }
+                            }
+                            
+                            
+                            
+                                
+                            
+                        }
+                        
+
+
+                    }
+                    
                 }
             }
             
@@ -94,7 +135,7 @@
         if(delay < 0){
             delay = 1/60.0f*1000.0f; // line is needed to stop delay from going negative when exiting window and causing program crash.
         }
-        std::cout << collisions << "\n" ;
+        //std::cout << collisions << "\n" ;
         //SDL_Delay(floor(1000/float(fps)));
         SDL_Delay(delay);
 

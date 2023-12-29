@@ -1,14 +1,15 @@
 #ifndef MENU_H
 #define MENU_H
 #include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
+
 
 class menu{
     public:
     SDL_Renderer* renderer;
+    SDL_Rect menuRect {100, 100, 200,400};
     //constructor
     menu(SDL_Renderer*);
-    TTF_Font* font = TTF_OpenFont("Raleway-Heavy.ttf",13); //testing out sdl_ttf
+    
 
     //destructor
     
