@@ -39,7 +39,7 @@ std::list<pipePair*> genPipePairs(SDL_Renderer *rend){ // generates all the pipe
     for(size_t i = 0; i < 5; ++i){
         pipePairs.push_back(new pipePair(rend, pos));
 
-        pos += 176;
+        pos += 178; // screen width + pipe width + 10 divided by num pipes
     }
     return pipePairs;
 
