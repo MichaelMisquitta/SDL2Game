@@ -6,7 +6,7 @@
 class menu{
     public:
     SDL_Renderer* renderer;
-    SDL_Rect menuRect {100, 100, 200,400};
+    SDL_Rect menuRect {100, 100, 600,200};
     //constructor
     menu(SDL_Renderer*);
     

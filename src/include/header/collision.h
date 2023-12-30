@@ -2,6 +2,7 @@
 #define COLLISION_H
 #include <header/pipe.h>
 #include <header/bird.h>
+#include <header/pipePair.h>
 #include <list>
 
 class collision{
@@ -17,11 +18,11 @@ class collision{
     //variables
 
     //methods
-    bool isColliding(bird ,std::list<pipe*> );
+    bool isColliding(bird ,std::list<pipePair*> );
 
 
 };
 
-bool collisionCheck(bool,float,float,float,float, std::list<pipe*>::iterator);
+bool collisionCheck(float,float,float,float, pipe*);
 
 #endif

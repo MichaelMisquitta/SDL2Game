@@ -1,20 +1,25 @@
 #include "header/pipe.h"
 #include <SDL2/SDL.h>
 #include <cstdlib>
+#include <header/globals.h>
 
-pipe::pipe (SDL_FPoint birdPos, bool location, SDL_Renderer* rend){
+pipe::pipe( bool location, SDL_Renderer* rend, int xpos){
     topOrBottom = location; // set value first otherwise rect starts at y = 0 for bottom 
-    birdPosition = birdPos;
-    generateSize();
-    generatePosition();
+    
+    
     renderer = rend;
     bmpTex = SDL_CreateTextureFromSurface(renderer, spriteSheetImage);
+    // if (!topOrBottom){
+    //     pipePosition.y = float(Global.HEIGHT)*0.75 - height;
+    //     pipeRect.y = pipePosition.y;
+    // }
+    pipePosition.x = xpos;
 }
 pipe::~pipe(){
 
 }
 
-void pipe::draw (SDL_Renderer* rend){
+void pipe::draw (){
 
     spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
     auto flip = [this]{
@@ -34,33 +39,21 @@ void pipe::draw (SDL_Renderer* rend){
 
 }
 
-void pipe::generateSize(){
-    width = 50 + rand() % 100;
-    height = 60 + rand() % 150;
-
+void pipe::setHeight(float height){
     
-    pipeRect.w = width;
     pipeRect.h = height;
+    if(this->topOrBottom == false){
+        pipeRect.y = float(Global.HEIGHT) * 0.75- height;
+    }
     
 
 }
 
 void pipe::generatePosition(){
-    pipePosition.x = int(birdPosition.x) + 100 + rand() % 400;
+    pipePosition.x = 800;
     pipeRect.x = pipePosition.x; // pipeRect x position is what is drawn
-    if (!topOrBottom){
-        pipePosition.y = float(Global.HEIGHT)*0.75 - height;
-        pipeRect.y = pipePosition.y;
-    }
+    
 }
 
-void pipe::updatePosition(float dt){
-    pipePosition.x -= dt * float(GAMEVELOCITY);
-    if (pipePosition.x <= -width - 10){
-        generateSize();
-        generatePosition(); // must happen afer genSize so right size is used
-        
-    }
-    pipeRect.x = pipePosition.x; // needed since generatePosition is only called when off screen
 
-}
+

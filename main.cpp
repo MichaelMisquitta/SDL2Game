@@ -7,6 +7,7 @@
 #include <list>
 #include <header/menu.h>
 #include <SDL2_ttf/SDL_ttf.h>
+#include <header/pipePair.h>
 //#include "cpp/bird.cpp"
 
 
@@ -34,11 +35,16 @@
     SDL_Renderer *renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
     collision collisionOb;
     bird flappybird {renderer};
-    pipe *pipeBottom = new pipe(flappybird.birdPosition,false, renderer);
-    pipe *pipeTop = new pipe(flappybird.birdPosition,true, renderer);
+    std::list<pipePair*> pipePairs = genPipePairs(renderer);
+    
+    // pipe *pipeBottom = new pipe(false, renderer, 480);
+    // pipe *pipeTop = new pipe(true, renderer, 480);
+    // //pipe *pipeBottom = new pipe(flappybird.birdPosition,false, renderer, 480);
+    // //pipe *pipeTop = new pipe(flappybird.birdPosition,true, renderer, 480);
+
     menu gameMenu {renderer};
 
-    std::list<pipe*> pipes {pipeBottom,pipeTop};
+    //std::list<pipe*> pipes {pipeBottom,pipeTop};
 
 
     if (window == NULL){
@@ -117,12 +123,9 @@
         flappybird.updatePosition(dt);
         flappybird.draw(renderer);
 
-        pipeBottom->updatePosition(dt);
-        pipeBottom->draw(renderer);
-        pipeTop->updatePosition(dt);
-        pipeTop->draw(renderer);
+        updatePipePairs(pipePairs,dt);
         
-        if(collisionOb.isColliding(flappybird,pipes)){
+        if(collisionOb.isColliding(flappybird,pipePairs)){
             collisions ++;
             //gameOn = false;
         }
@@ -135,7 +138,7 @@
         if(delay < 0){
             delay = 1/60.0f*1000.0f; // line is needed to stop delay from going negative when exiting window and causing program crash.
         }
-        //std::cout << collisions << "\n" ;
+        std::cout << collisions << "\n" ;
         //SDL_Delay(floor(1000/float(fps)));
         SDL_Delay(delay);
 
@@ -144,8 +147,9 @@
     }
     // add code to delete pipe pointers. Use smart pointers next, which are objects and
     //when pointer obj goes out of scope, it deletes pointer automatically!
-    delete pipeTop;
-    delete pipeBottom;
+     
+     //ADD CODE TO FREE POINTERS TO PIPES -USE METHOD AND LOOP THROUGH POINTERS OR USE
+     //SMART POINTERS
     std::cout << "-successs bingus 2";
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

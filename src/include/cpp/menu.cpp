@@ -14,7 +14,7 @@ void menu::drawMenu(){
     SDL_RenderClear(renderer);
     TTF_Font* font = TTF_OpenFont("Raleway-Heavy.ttf",28); 
     SDL_Color color {255,255,0,255};
-    fontSurface = TTF_RenderText_Blended_Wrapped(font, "Menu --- Left Alt to Continue --- ESC to Quit ", color, 100);
+    fontSurface = TTF_RenderText_Blended_Wrapped(font, "Menu -- L-CTRL to Continue -- L-Alt to Quit ", color, 600);
     fontTexture = SDL_CreateTextureFromSurface(renderer,fontSurface);
     SDL_RenderCopyEx(renderer,fontTexture,NULL,&menuRect,0,NULL, SDL_FLIP_NONE);
 
