@@ -13,6 +13,7 @@ class bird{
     SDL_FPoint birdPosition = {200.0,0.0}; //float needed for accurate position
     SDL_FPoint birdVelocity = {0.00,0.00}; //float needed for accurate position
     global Global;
+    double angle = 0;
 
     SDL_Renderer* renderer;\
     //for sprite
@@ -30,6 +31,7 @@ class bird{
     void draw(SDL_Renderer*);
     void updatePosition(float dt);
     void updateVelocity(bool ,float);
+    void updateAngle();
 
 
     

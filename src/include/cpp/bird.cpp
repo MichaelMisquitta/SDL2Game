@@ -2,6 +2,7 @@
 #include "header/globals.h"
 #include <header/bird.h>
 #include <SDL2/SDL.h>
+#include <math.h> // for sin
 
 bird::bird(SDL_Renderer* rend){
     renderer = rend;
@@ -17,8 +18,8 @@ void bird::draw(SDL_Renderer* rend){
 
     spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
     // without birdRect, it renders as large as window allows. birdRect crops out what it can fit
-    
-    SDL_RenderCopyEx(renderer, bmpTex,NULL, &birdRect,0,NULL,SDL_FLIP_NONE );
+    updateAngle();
+    SDL_RenderCopyEx(renderer, bmpTex,NULL, &birdRect,angle,NULL,SDL_FLIP_NONE );
     
     //SDL_SetRenderDrawColor(rend,0,100,0,255);
     //SDL_RenderFillRect(rend,&birdRect);
@@ -41,4 +42,9 @@ void bird::updateVelocity(bool jumped,float dt){
         
     }
     
+}
+
+void bird::updateAngle(){
+    //y+ is down and clockwise is positive so no need to flip angle sin.
+    angle = 180/Global.PI * sin(birdVelocity.y/Global.GAMEVELOCITY); 
 }
