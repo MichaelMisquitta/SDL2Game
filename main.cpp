@@ -8,6 +8,7 @@
 #include <header/menu.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <header/pipePair.h>
+#include <header/scoreboard.h>
 //#include "cpp/bird.cpp"
 
 
@@ -34,6 +35,7 @@
     SDL_Window *window = SDL_CreateWindow("test",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,Global.WIDTH,Global.HEIGHT,0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
     collision collisionOb;
+    scoreboard scoreBoard{renderer};
     bird flappybird {renderer};
     std::list<pipePair*> pipePairs = genPipePairs(renderer);
     
@@ -129,6 +131,7 @@
             collisions ++;
             //gameOn = false;
         }
+        scoreBoard.drawScoreBoard();
 
         end = SDL_GetPerformanceCounter();
         elapsedMS = (end-start) / (float)(SDL_GetPerformanceFrequency()) * 1000.0f;
