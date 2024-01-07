@@ -8,6 +8,7 @@ pipe::pipe( bool location, SDL_Renderer* rend, int xpos){
     
     
     renderer = rend;
+    spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
     bmpTex = SDL_CreateTextureFromSurface(renderer, spriteSheetImage);
     // if (!topOrBottom){
     //     pipePosition.y = float(Global.HEIGHT)*0.75 - height;
@@ -21,7 +22,6 @@ pipe::~pipe(){
 
 void pipe::draw (){
 
-    spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
     auto flip = [this]{
         if(this->topOrBottom){
             return SDL_FLIP_VERTICAL;

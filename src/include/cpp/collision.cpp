@@ -4,7 +4,7 @@ collision::collision(){
 
 }
 
-bool collision::isColliding(bird flappybird,std::list<pipePair*> pipePairs ){
+bool collision::isColliding(bird& flappybird,std::list<pipePair*> &pipePairs ){ // pass by reference using & so that copy constructor is not invoked.
     float birdLeft = flappybird.birdRect.x;
     float birdRight = flappybird.birdRect.x + flappybird.birdRect.w;
     float birdHeight = flappybird.birdRect.h;

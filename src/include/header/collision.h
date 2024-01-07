@@ -18,7 +18,7 @@ class collision{
     //variables
 
     //methods
-    bool isColliding(bird ,std::list<pipePair*> );
+    bool isColliding(bird& ,std::list<pipePair*>& );
 
 
 };

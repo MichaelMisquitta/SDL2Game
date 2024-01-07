@@ -6,17 +6,20 @@
 
 bird::bird(SDL_Renderer* rend){
     renderer = rend;
+    spriteSheetImage = SDL_LoadBMP("images/patrick.bmp");
     bmpTex = SDL_CreateTextureFromSurface(renderer, spriteSheetImage);
      
 }
 bird::~bird(){
+    
+
     SDL_FreeSurface(spriteSheetImage);
-    //free(renderer); taken care off by destroyRenderer in main
+    
 }
 
 void bird::draw(SDL_Renderer* rend){
 
-    spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
+    // spriteSheetImage = SDL_LoadBMP("images/pipe.bmp");
     // without birdRect, it renders as large as window allows. birdRect crops out what it can fit
     updateAngle();
     SDL_RenderCopyEx(renderer, bmpTex,NULL, &birdRect,angle,NULL,SDL_FLIP_NONE );

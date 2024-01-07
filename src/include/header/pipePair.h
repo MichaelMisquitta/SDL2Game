@@ -17,5 +17,5 @@ class pipePair{
 
 };
 std::list<pipePair*> genPipePairs(SDL_Renderer *rend);
-void updatePipePairs(std::list<pipePair*>, float);
+void updatePipePairs(std::list<pipePair*>&, float); // pass in list as reference not copy
 #endif

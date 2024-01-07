@@ -15,9 +15,9 @@ class bird{
     global Global;
     double angle = 0;
 
-    SDL_Renderer* renderer;\
+    SDL_Renderer* renderer;
     //for sprite
-    SDL_Surface* spriteSheetImage = SDL_LoadBMP("images/patrick.bmp");
+    SDL_Surface* spriteSheetImage;
     SDL_Texture *bmpTex;
     
     

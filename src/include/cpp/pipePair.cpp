@@ -45,7 +45,7 @@ std::list<pipePair*> genPipePairs(SDL_Renderer *rend){ // generates all the pipe
 
 }
 
-void updatePipePairs(std::list<pipePair*> pipePairs,float dt){
+void updatePipePairs(std::list<pipePair*>& pipePairs,float dt){
     for(std::list<pipePair*>::iterator it = pipePairs.begin(); it != pipePairs.end(); ++it){
         (*it)->updatePipePositions(dt); // pipeTop is a pointer so must be dereferenced
         
